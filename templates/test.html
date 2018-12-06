@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test users - Awesome Python Webapp</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+    <h1>All users</h1>
+    <form action="/test/" method="POST">
+        {% csrf_token %}   <!--加入这行 --> 
+        用户名：<input type="text" name="username">
+        <br/>
+        密码：<input type="password" name="password">
+        <br/>
+        <input type="submit" value="提交">
+    </form>
+
+    <table border="1">
+        <thead>
+            <th>用户名</th>
+            <th>密码</th>
+        </thead>
+
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.user }}</td>
+                <td>{{ item.pwd }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
