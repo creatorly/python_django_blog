@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.shortcuts import HttpResponse
-from app_test import models
+from .models import UserInfo
 
 # Create your views here.
-
 userlist = []
+
 
 def test(request):
     # 1.return data
@@ -24,10 +23,10 @@ def test(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         # 将数据保存到数据库
-        models.UserInfo.objects.create(user = username, pwd = password)
+        UserInfo.objects.create(user=username, pwd=password)
         
     # 将数据库中的所有数据读取出来
-    userlist = models.UserInfo.objects.all()
-    return render(request,'test.html', {'data':userlist})
+    userlist = UserInfo.objects.all()
+    return render(request, 'test.html', {'data': userlist})
 
     
