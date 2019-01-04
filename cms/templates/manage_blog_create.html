@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}创建日志{% endblock %}
+
+{% block beforehead %}
+
+<script>
+
+var testEditor;
+$(function () {
+    $.get("{% static  'editor.md-master/examples/test.md' %}", function (md) {
+        testEditor = editormd("test-editormd", {
+            width: "98%",
+            height: 730,
+            path: '{% static 'editor.md-master/lib/' %}',
+            markdown: md,
+            codeFold: true,
+            saveHTMLToTextarea: true,
+            searchReplace: true,
+            htmlDecode: "style,script,iframe|on*",
+            emoji: true,
+            taskList: true,
+            tocm: true,         // Using [TOCM]
+            tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+            flowChart: true,             // 开启流程图支持，默认关闭
+            sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            {#imageUploadURL: "{% static 'plugins/editor-1.md-master/examples/php/upload.php' %}",#}
+            imageUploadURL: "{% url 'blog_img_upload' %}",
+            onload: function () {
+                console.log('onload', this);
+            },
+
+            {#/**设置主题颜色 把这些注释去掉主题就是黑色的了*/#}
+            {#editorTheme: "pastel-on-dark",#}
+            {#theme: "dark",#}
+            {#previewTheme: "dark"#}
+        });
+    });
+});
+
+var
+    ID = '{{ id }}',
+    action = '{{ action }}';
+
+function initVM(blog) {
+    var vm = new Vue({
+        el: '#vm',
+        data: blog,
+        methods: {
+            submit: function (event) {
+                event.preventDefault();
+                var $form = $('#vm').find('form');
+                blog.content = encodeURIComponent(testEditor.getMarkdown());
+                $form.postJSON(action, this.$data, function (err, r) {
+                    if (err) {
+                        $form.showFormError(err);
+                    }
+                    else {
+                        return location.assign('/cms/blogs/');
+                    }
+                });
+            }
+        }
+    });
+    $('#vm').show();
+}
+
+$(function () {
+    if (ID) {    {#修改博客#}
+        getJSON('/cms/blogs/' + ID, function (err, blog) {
+            if (err) {
+                return fatal(err);
+            }
+            $('#loading').hide();
+            initVM(blog);
+        });
+    }
+    else {    {#创建博客#}
+        $('#loading').hide();
+        initVM({
+            name: '',
+            content: ''
+        });
+    }
+});
+
+</script>
+
+{% endblock %}
+
+{% block middle-body %}
+
+    <div id="vm" class="uk-width-1-1">
+        <form v-on="submit: submit" class="uk-form uk-form-stacked">
+            <div class="uk-alert uk-alert-danger uk-hidden"></div>
+            <div class="uk-form-row">
+                <div class="uk-float-left uk-width-3-4">
+                    <label class="uk-form-label">标题:</label>
+                    <input v-model="name" name="name" type="text" placeholder="标题" class="uk-width-3-5">
+                </div>
+                <div class="uk-float-right">
+                    <p></p>
+                    <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-save"></i> 保存</button>
+                    <a href="/cms/blogs" class="uk-button"><i class="uk-icon-times"></i> 取消</a>
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">内容:</label>
+                <div id="test-editormd" class="uk-form-controls">
+                    <textarea v-model="content" name="content" placeholder="内容" class="uk-width-1-1" style="resize:none;"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="{% static 'middle-1-1.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+
+/*顶部*/
+.top-bar{
+    height: 40px;
+    background-color: #f7f7f7;
+    border: 1px solid rgba(0,0,0,.1);
+}
+
+.top-container{
+    display: block;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.top-name{
+    float: left;
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    color: dodgerblue;
+    text-decoration:none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/*中部*/
+.main-bar{
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.main-container{
+    width: 90%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left-bar{
+    /*background-color: dodgerblue;*/
+    width: 15%;
+    height: 100%;
+    float: left;
+    /*padding: 0px;*/
+    /*margin: 0px;*/
+}
+
+.left-article{
+    background-color: #f7f7f7;
+    margin-bottom: 5px;
+}
+
+.left-title{
+    padding: 16px 16px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.left-title:before{
+    display: inline-block;
+    margin-right: 8px;
+    content: '';
+    width: 4px;
+    height: 22px;
+    vertical-align: -6px;
+    background-color: #ca0c16;
+}
+
+.left-content li{
+    padding-left: 16px;
+    padding-bottom: 8px;
+    list-style: none;
+}
+
+/*中间*/
+.middle-bar{
+    /*background-color: #f7f7f7;*/
+    /*width: 70%;*/
+    float: left;
+}
+
+
+/*右侧*/
+.right-bar{
+    /*background-color: dodgerblue;*/
+    width: 15%;
+    height: 100%;
+    float: right;
+}
+
+
+.input_search{
+    font-size: 14px;
+    color: #4D4D4D;
+    display: block;
+
+    float: left;
+    height: 18px;
+    width: 78%;
+    margin-left: 2%;
+    padding: 4px 0 4px 7px;
+}
+
+.right-bar .link-title{
+    margin: 10px;
+}
+
+.right-bar li {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid rgba(0,0,0,.1);
+}
+
+/*底部*/
+.bottom-bar{
+    width: 100%;
+    height: 45px;
+    line-height: 50px;
+    background-color: #f7f7f7;
+    border: 1px solid rgba(0,0,0,.1);
+    position: fixed;  /*固定在底部*/
+    bottom: 0;
+}
